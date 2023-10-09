@@ -26,6 +26,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    document.title = "Trade Hall";
     console.log(items);
   }, [items]);
 
