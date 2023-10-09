@@ -1,8 +1,9 @@
 name: dev pipeline
 
 on:
-  pull_request:
-    branches: [develop]
+  push:
+    branches:
+      - "develop"
 
 permissions:
   id-token: write
