@@ -1,0 +1,35 @@
+name: dev pipeline
+
+on:
+  pull_request:
+    branches: [develop]
+
+permissions:
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      AWS_DEFAULT_REGION: us-east-1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          role-to-assume: arn:aws:iam::550509277095:role/GithubActions-S3Full
+          role-session-name: deploy-to-dev
+          aws-region: ${{env.AWS_DEFAULT_REGION}}
+
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     role-to-assume: arn:aws:iam::550509277095:role/GithubActions-S3Full
+      #     role-session-name: deploy-to-dev
+      #     aws-region: ${{env.AWS_DEFAULT_REGION}}
+
+      - name: Deploy static site to S3 bucket
+        run: aws s3 sync ./dist/ s3://tradehall.app --delete
+        with:
+          role-to-assume: arn:aws:iam::550509277095:role/GithubActions-S3Full
+          role-session-name: deploy-to-dev
+          aws-region: ${{env.AWS_DEFAULT_REGION}}
