@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate, Routes, Route } from "react-router-dom";
 import "./App.css";
-import { v4 as uuid } from "uuid";
 import ItemList from "./components/ItemList";
 import ItemDetail from "./components/ItemDetail";
 import ItemCard from "./components/ItemCard";
@@ -12,7 +11,11 @@ function App() {
   const [itemTypes, setItemTypes] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/items")
+    document.title = "Trade Hall";
+
+    console.log(import.meta.env.VITE_ITEMS_FETCH_URL);
+
+    fetch(import.meta.env.VITE_ITEMS_FETCH_URL)
       .then((response) => response.json())
       .then((data) => setItems(data));
 
@@ -26,7 +29,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    document.title = "Trade Hall";
     console.log(items);
   }, [items]);
 
