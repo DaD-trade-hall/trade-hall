@@ -16,11 +16,14 @@ function App() {
 
     console.log(import.meta.env.VITE_ITEMS_FETCH_URL);
 
-    fetch(import.meta.env.VITE_ITEMS_FETCH_URL, {
-      method: "POST",
-      body: JSON.stringify(itemsFilter),
-      mode: "cors",
-    })
+    fetch(
+      "https://vay104njmg.execute-api.us-east-2.amazonaws.com/prod/fetch-items",
+      {
+        method: "POST",
+        body: JSON.stringify(itemsFilter),
+        mode: "cors",
+      }
+    )
       .then((response) => response.json())
       .then((data) => setItems(data));
 
