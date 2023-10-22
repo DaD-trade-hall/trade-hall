@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import ItemCard from "./ItemCard";
 import { SimpleGrid } from "@chakra-ui/react";
 import { ItemSearch } from "./ItemSearch";
+import { ItemFilterBuilder } from "./ItemFilterBuilder";
 
-function ItemList({ items, itemTypes, enchantments }) {
+function ItemList({ items, setItemsFilter, itemTypes, enchantments }) {
   const enchantmentFilterTags = enchantments.map((enchantment, index) => {
     return {
       value: index,
@@ -85,13 +86,16 @@ function ItemList({ items, itemTypes, enchantments }) {
 
   return (
     <>
-      {/* Test: {JSON.stringify(itemsFilteredByItemType)} */}
-      <ItemSearch
+      {/* <ItemSearch
         enchantments={enchantmentFilterTags}
         setEnchantmentFilters={setEnchantmentFilters}
         itemTypes={itemTypeFilterTags}
         setItemTypeFilters={setItemTypeFilters}
         setSortingMode={setSortingMode}
+      /> */}
+      <ItemFilterBuilder
+        enchantments={enchantments}
+        setItemsFilter={setItemsFilter}
       />
       <SimpleGrid
         columns={{ sm: 1, md: 2, lg: 2, xl: 3 }}

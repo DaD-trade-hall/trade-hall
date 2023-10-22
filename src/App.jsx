@@ -7,6 +7,7 @@ import ItemCard from "./components/ItemCard";
 
 function App() {
   const [items, setItems] = useState([]);
+  const [itemsFilter, setItemsFilter] = useState({});
   const [enchantments, setEnchantments] = useState([]);
   const [itemTypes, setItemTypes] = useState([]);
 
@@ -15,7 +16,11 @@ function App() {
 
     console.log(import.meta.env.VITE_ITEMS_FETCH_URL);
 
-    fetch(import.meta.env.VITE_ITEMS_FETCH_URL)
+    fetch(import.meta.env.VITE_ITEMS_FETCH_URL, {
+      method: "POST",
+      body: JSON.stringify(itemsFilter),
+      mode: "cors",
+    })
       .then((response) => response.json())
       .then((data) => setItems(data));
 
@@ -25,12 +30,29 @@ function App() {
 
     fetch("http://localhost:3000/enchantments")
       .then((response) => response.json())
-      .then((data) => setEnchantments(data));
+      .then((data) => {
+        setEnchantments(data);
+      });
   }, []);
 
+  // useEffect(() => {
+  //   console.log(items);
+  // }, [items]);
+
+  // useEffect(() => {
+  //   console.log(enchantments);
+  // }, [enchantments]);
+
   useEffect(() => {
-    console.log(items);
-  }, [items]);
+    if (itemsFilter && Object.keys(itemsFilter).length) {
+      fetch(import.meta.env.VITE_ITEMS_FETCH_URL, {
+        method: "POST",
+        body: JSON.stringify(itemsFilter),
+      })
+        .then((response) => response.json())
+        .then((data) => setItems(data));
+    }
+  }, [itemsFilter]);
 
   return (
     <Routes>
@@ -40,6 +62,7 @@ function App() {
         element={
           <ItemList
             items={items}
+            setItemsFilter={setItemsFilter}
             enchantments={enchantments}
             itemTypes={itemTypes}
           />
