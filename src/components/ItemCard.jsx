@@ -126,9 +126,9 @@ export default function ItemCard({ item }) {
             flexDirection={"column"}
             h={"100%"}
           >
-            {item.enchantments.map((enchantment) => {
+            {item.enchantments.map((enchantment, index) => {
               return (
-                <ListItem>
+                <ListItem key={`list-item-${index}`}>
                   <ListIcon
                     as={ChevronRightIcon}
                     boxSize={4}

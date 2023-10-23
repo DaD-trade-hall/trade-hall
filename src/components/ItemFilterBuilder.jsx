@@ -8,7 +8,12 @@ import Select from "react-select";
 function ValueEditor(props) {
   const { field, handleOnChange, value, values } = props;
 
-  if (field === "class" || field === "quality" || field === "enchantment") {
+  if (
+    field === "class" ||
+    field === "quality" ||
+    field === "enchantment" ||
+    field === "itemType"
+  ) {
     return (
       <Select
         onChange={handleOnChange}
@@ -29,7 +34,7 @@ function ValueEditor(props) {
   return <DefaultValueEditor {...props} />;
 }
 
-export function ItemFilterBuilder({ enchantments, setItemsFilter }) {
+export function ItemFilterBuilder({ enchantments, itemTypes, setItemsFilter }) {
   const fields = [
     {
       name: "class",
@@ -68,12 +73,29 @@ export function ItemFilterBuilder({ enchantments, setItemsFilter }) {
       label: "Enchantment",
       values: enchantments.map((enchantment) => {
         return {
-          value: enchantment.name,
-          label: enchantment.name
+          value: enchantment,
+          label: enchantment
             .split("_")
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join(" ")
             .replace("Damage", "Dmg"),
+        };
+      }),
+      operators: [
+        { name: "=", label: "IS" },
+        { name: "!=", label: "IS NOT" },
+      ],
+    },
+    {
+      name: "itemType",
+      label: "Item Type",
+      values: itemTypes.map((itemType) => {
+        return {
+          value: itemType,
+          label: itemType
+            .split("_")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" "),
         };
       }),
       operators: [
