@@ -1,8 +1,6 @@
 import "../App.css";
-import { useEffect, useState } from "react";
 import ItemCard from "./ItemCard";
 import { SimpleGrid } from "@chakra-ui/react";
-import { ItemSearch } from "./ItemSearch";
 import { ItemFilterBuilder } from "./ItemFilterBuilder";
 
 function ItemList({ items, setItemsFilter, itemTypes, enchantments }) {

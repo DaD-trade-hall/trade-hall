@@ -39,16 +39,5 @@ export function customRuleProcessor(rule, options) {
 
   if (chunk) return JSON.stringify(chunk);
 
-  // switch (rule.field) {
-  //   case "quality":
-  //     return `{"quality":"${value}"}`;
-  //   case "class":
-  //     return `{"classes":"${value}"}`;
-  //   case "enchantment":
-  //     return `{"enchantments.name":"${value}"}`;
-  //   case "itemType":
-  //     return `{"itemType":"${value}"}`;
-  // }
-
   return defaultRuleProcessorMongoDB(rule, options);
 }
