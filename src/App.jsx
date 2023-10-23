@@ -1,33 +1,39 @@
 import { useEffect, useState } from "react";
 import { Navigate, Routes, Route } from "react-router-dom";
 import "./App.css";
-import { v4 as uuid } from "uuid";
 import ItemList from "./components/ItemList";
 import ItemDetail from "./components/ItemDetail";
 import ItemCard from "./components/ItemCard";
+import enchantments from "./constants/enchantments.json";
+import itemTypes from "./constants/itemTypes.json";
 
 function App() {
   const [items, setItems] = useState([]);
-  const [enchantments, setEnchantments] = useState([]);
-  const [itemTypes, setItemTypes] = useState([]);
+  const [itemsFilter, setItemsFilter] = useState({});
 
   useEffect(() => {
-    fetch("http://localhost:3000/items")
+    document.title = "Trade Hall";
+
+    fetch(
+      "https://2wolo16gne.execute-api.us-east-2.amazonaws.com/PROD/fetch-items"
+    )
       .then((response) => response.json())
       .then((data) => setItems(data));
-
-    fetch("http://localhost:3000/itemTypes")
-      .then((response) => response.json())
-      .then((data) => setItemTypes(data));
-
-    fetch("http://localhost:3000/enchantments")
-      .then((response) => response.json())
-      .then((data) => setEnchantments(data));
   }, []);
 
   useEffect(() => {
-    console.log(items);
-  }, [items]);
+    if (itemsFilter && Object.keys(itemsFilter).length) {
+      fetch(
+        "https://2wolo16gne.execute-api.us-east-2.amazonaws.com/PROD/fetch-items",
+        {
+          method: "POST",
+          body: JSON.stringify(itemsFilter),
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => setItems(data));
+    }
+  }, [itemsFilter]);
 
   return (
     <Routes>
@@ -37,6 +43,7 @@ function App() {
         element={
           <ItemList
             items={items}
+            setItemsFilter={setItemsFilter}
             enchantments={enchantments}
             itemTypes={itemTypes}
           />

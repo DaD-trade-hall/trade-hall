@@ -17,8 +17,9 @@
     "framer-motion": "^10.16.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-querybuilder": "^6.5.1",
     "react-router-dom": "^6.15.0",
-    "react-tag-autocomplete": "^7.1.0",
+    "react-select": "^5.7.7",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
